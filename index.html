@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>oliver_wood — AI Content Creator</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --border: #222222;
+    --accent: #c8f03c;
+    --accent2: #ff6b35;
+    --text: #f0f0f0;
+    --muted: #666666;
+    --mid: #999999;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.5;
+  }
+
+  /* HEADER */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-left: 32px;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+
+  .hero-left {
+    padding: 80px 40px 80px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+  }
+
+  .hero-tag {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 6vw, 88px);
+    line-height: 1.0;
+    font-weight: 900;
+    margin-bottom: 32px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--mid);
+    max-width: 420px;
+    margin-bottom: 48px;
+  }
+
+  .hero-desc span {
+    font-family: 'Noto Sans JP', sans-serif;
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0a;
+    padding: 14px 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: #d4f54a;
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    color: var(--mid);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: all 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--text); border-color: var(--mid); }
+
+  .hero-right {
+    padding: 80px 80px 80px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .stat-card {
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .stat-card:hover { border-color: #333; }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform 0.3s;
+    transform-origin: bottom;
+  }
+
+  .stat-card:hover::before { transform: scaleY(1); }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* SECTION */
+  section {
+    border-top: 1px solid var(--border);
+    padding: 80px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 56px;
+  }
+
+  .section-num {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .service-item {
+    background: var(--bg);
+    padding: 40px 32px;
+    transition: background 0.2s;
+  }
+
+  .service-item:hover { background: #0f0f0f; }
+
+  .service-icon {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .service-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--mid);
+    margin-bottom: 20px;
+  }
+
+  .service-desc .ja {
+    font-family: 'Noto Sans JP', sans-serif;
+    display: block;
+    font-size: 11px;
+    margin-top: 4px;
+    color: var(--muted);
+  }
+
+  .service-price {
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  /* PLATFORMS */
+  .platforms-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .platform-card {
+    border: 1px solid var(--border);
+    padding: 32px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+    display: block;
+  }
+
+  .platform-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .platform-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .platform-handle {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  .platform-desc {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+
+  /* SPONSORS */
+  .sponsors-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  .sponsor-item {
+    background: var(--bg);
+    padding: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sponsor-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+  }
+
+  .sponsor-amount {
+    font-size: 13px;
+    color: var(--accent);
+  }
+
+  /* PRICING */
+  .pricing-box {
+    border: 1px solid var(--border);
+    padding: 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .price-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .price-unit {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .pricing-details {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 2;
+  }
+
+  .pricing-details li {
+    list-style: none;
+    display: flex;
+    gap: 12px;
+  }
+
+  .pricing-details li::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* CONTACT */
+  #contact {
+    text-align: center;
+  }
+
+  .contact-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .contact-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .contact-sub {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.8;
+    margin-bottom: 48px;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-left > * {
+    animation: fadeUp 0.7s ease forwards;
+    opacity: 0;
+  }
+
+  .hero-tag { animation-delay: 0.1s; }
+  .hero-title { animation-delay: 0.2s; }
+  .hero-desc { animation-delay: 0.3s; }
+  .cta-row { animation-delay: 0.4s; }
+
+  .stat-card {
+    animation: fadeUp 0.7s ease forwards;
+    opacity: 0;
+  }
+  .stat-card:nth-child(1) { animation-delay: 0.3s; }
+  .stat-card:nth-child(2) { animation-delay: 0.4s; }
+  .stat-card:nth-child(3) { animation-delay: 0.5s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 60px 32px; border-right: none; border-bottom: 1px solid var(--border); }
+    .hero-right { padding: 40px 32px; }
+    section { padding: 60px 32px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .platforms-row { grid-template-columns: 1fr; }
+    .sponsors-list { grid-template-columns: 1fr; }
+    .pricing-box { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 12px; padding: 32px; }
+    header { padding: 16px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">oliver_wood</div>
+  <nav>
+    <a href="#services">Services</a>
+    <a href="#platforms">Platforms</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">AI Content Creator</div>
+    <h1 class="hero-title">AI<br><em>Writing</em><br>That Converts</h1>
+    <p class="hero-desc">
+      Sponsored articles and AI tool reviews in both Japanese and English — written by a practitioner, not a summarizer.
+      <span>AIツールを日常的に使い倒す現場視点で、日本語・英語両方で書きます。</span>
+    </p>
+    <div class="cta-row">
+      <a href="#contact" class="btn-primary">Work with me</a>
+      <a href="#platforms" class="btn-ghost">See my work</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-card">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Languages — Japanese & English</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">$150<span style="font-size:24px">+</span></div>
+      <div class="stat-label">Per sponsored article</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2+</div>
+      <div class="stat-label">Completed sponsor deals</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Services</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-item">
+      <div class="service-icon">✍️</div>
+      <div class="service-name">Sponsored Article</div>
+      <div class="service-desc">
+        Honest, hands-on review of your AI tool — written from real usage, not marketing copy.
+        <span>実際に使った体験ベースのスポンサード記事。</span>
+      </div>
+      <div class="service-price">From $150 / article</div>
+    </div>
+    <div class="service-item">
+      <div class="service-icon">🌐</div>
+      <div class="service-name">Bilingual Package</div>
+      <div class="service-desc">
+        One article published on both note.com (Japanese) and Medium (English) for dual-market reach.
+        <span>日英両方での同時展開パッケージ。</span>
+      </div>
+      <div class="service-price">From $250 / package</div>
+    </div>
+    <div class="service-item">
+      <div class="service-icon">🤖</div>
+      <div class="service-name">AI Tool Deep Dive</div>
+      <div class="service-desc">
+        Long-form review covering use cases, limitations, and real-world workflow integration.
+        <span>具体的なワークフロー込みの詳細レビュー。</span>
+      </div>
+      <div class="service-price">From $200 / article</div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section id="platforms">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Platforms</h2>
+  </div>
+  <div class="platforms-row">
+    <a href="https://note.com/oliver_wood" target="_blank" class="platform-card">
+      <div class="platform-name">note.com</div>
+      <div class="platform-handle">@oliver_wood</div>
+      <div class="platform-desc">Japanese-language personal narratives and AI tool experiences. Primary channel for the Japanese market.</div>
+    </a>
+    <a href="https://medium.com/@johnpascualkumar077" target="_blank" class="platform-card">
+      <div class="platform-name">Medium</div>
+      <div class="platform-handle">@johnpascualkumar077</div>
+      <div class="platform-desc">English-language AI tool reviews targeting international AI startups and a global readership.</div>
+    </a>
+    <a href="https://twitter.com" target="_blank" class="platform-card">
+      <div class="platform-name">X / Twitter</div>
+      <div class="platform-handle">Distribution channel</div>
+      <div class="platform-desc">Content amplification across both Japanese and English audiences. Used to drive traffic to all articles.</div>
+    </a>
+  </div>
+</section>
+
+<!-- PAST SPONSORS -->
+<section id="sponsors">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Past Sponsors</h2>
+  </div>
+  <div class="sponsors-list">
+    <div class="sponsor-item">
+      <div class="sponsor-name">PolloAI</div>
+      <div class="sponsor-amount">$75</div>
+    </div>
+    <div class="sponsor-item">
+      <div class="sponsor-name">YouWareAI</div>
+      <div class="sponsor-amount">$35</div>
+    </div>
+  </div>
+  <p style="font-size:12px; color: var(--muted);">Both engagements delivered on time with positive sponsor feedback. More references available on request.</p>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Pricing</h2>
+  </div>
+  <div class="pricing-box">
+    <div>
+      <div class="price-display">$150</div>
+      <div class="price-unit">Starting rate / article</div>
+    </div>
+    <ul class="pricing-details">
+      <li>One platform (note.com or Medium)</li>
+      <li>1,500–2,500 words based on hands-on use</li>
+      <li>Honest, first-person review format</li>
+      <li>Social media promotion included</li>
+      <li>Bilingual packages available on request</li>
+      <li>Revision included within 3 days of draft</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <h2 class="contact-title">Let's<br><em>Work</em><br>Together</h2>
+    <p class="contact-sub">
+      Reach out via DM on X or send a message through any platform below.
+      I respond within 24 hours.
+      <br><br>
+      <span style="font-family: 'Noto Sans JP', sans-serif; font-size: 11px; color: var(--muted);">XのDMかnoteのメッセージからご連絡ください。24時間以内に返信します。</span>
+    </p>
+    <div class="contact-links">
+      <a href="https://note.com/oliver_wood" target="_blank" class="contact-link">note.com</a>
+      <a href="https://medium.com/@johnpascualkumar077" target="_blank" class="contact-link">Medium</a>
+      <a href="https://twitter.com" target="_blank" class="contact-link">X / Twitter</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>oliver_wood — AI Content Creator</div>
+  <div>Available for sponsored articles · English & Japanese</div>
+</footer>
+
+</body>
+</html>
