@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" id="htmlRoot">
 
 <head>
     <meta charset="UTF-8">
@@ -7,9 +7,7 @@
     <title>Portfolio - AI-Powered Developer</title>
     <meta name="description" content="AI活用でモダンなWebアプリ・コーポレートサイト・自動化ツールを爆速開発するポートフォリオ。">
     <meta property="og:title" content="Portfolio - AI-Powered Developer">
-    <meta property="og:description" content="Bootstrap5・Python・Git連携を組み合わせた高品質な成果物を公開中。">
     <meta property="og:type" content="website">
-
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
@@ -49,7 +47,7 @@
             overflow-x: hidden;
         }
 
-        /* ─── NAVBAR ─── */
+        /* NAVBAR */
         .navbar {
             background: rgba(13, 13, 26, 0.85);
             backdrop-filter: blur(20px);
@@ -69,7 +67,26 @@
             color: var(--text-main) !important;
         }
 
-        /* ─── HERO ─── */
+        /* Language toggle */
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            border-radius: 999px;
+            padding: 4px 14px;
+            font-size: .8rem;
+            cursor: pointer;
+            transition: border-color .2s, color .2s;
+            letter-spacing: .05em;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            border-color: var(--accent);
+            color: #a78bfa;
+        }
+
+        /* HERO */
         #hero {
             min-height: 100vh;
             display: flex;
@@ -139,7 +156,7 @@
             font-weight: 600;
         }
 
-        /* ─── SECTION HEADERS ─── */
+        /* SECTION */
         .section-badge {
             display: inline-block;
             background: rgba(124, 58, 237, 0.12);
@@ -169,7 +186,7 @@
             background-clip: text;
         }
 
-        /* ─── STATS ─── */
+        /* STATS */
         #stats {
             background: transparent;
             padding: 60px 0;
@@ -198,11 +215,7 @@
             margin-top: .25rem;
         }
 
-        /* ─── SKILLS ─── */
-        #skills {
-            background: rgba(255, 255, 255, 0.01);
-        }
-
+        /* SKILLS */
         .skill-chip {
             display: inline-flex;
             align-items: center;
@@ -226,11 +239,7 @@
             color: var(--accent);
         }
 
-        /* ─── WORKS (BENTO GRID) ─── */
-        #works {
-            background: transparent;
-        }
-
+        /* BENTO GRID */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
@@ -312,7 +321,6 @@
             z-index: 1;
         }
 
-        /* Bento sizing */
         .bento-lg {
             grid-column: span 7;
         }
@@ -325,24 +333,23 @@
             grid-column: span 6;
         }
 
-        /* Bento colors */
         .bento-1 {
-            background: linear-gradient(135deg, #1e1b4b 0%, #2d1b69 100%);
+            background: linear-gradient(135deg, #1e1b4b, #2d1b69);
         }
 
         .bento-2 {
-            background: linear-gradient(135deg, #0c1a2e 0%, #0e3a5e 100%);
+            background: linear-gradient(135deg, #0c1a2e, #0e3a5e);
         }
 
         .bento-3 {
-            background: linear-gradient(135deg, #0f1e14 0%, #14532d 100%);
+            background: linear-gradient(135deg, #0f1e14, #14532d);
         }
 
         .bento-4 {
-            background: linear-gradient(135deg, #1a0a00 0%, #431407 100%);
+            background: linear-gradient(135deg, #1a0a00, #431407);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width:768px) {
             .bento-grid {
                 grid-auto-rows: 220px;
             }
@@ -354,7 +361,6 @@
             }
         }
 
-        /* ─── TECH TAGS ─── */
         .tech-tag {
             display: inline-block;
             background: rgba(255, 255, 255, 0.07);
@@ -365,11 +371,7 @@
             margin: 2px;
         }
 
-        /* ─── CONTACT ─── */
-        #contact {
-            background: transparent;
-        }
-
+        /* CONTACT */
         .contact-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -406,7 +408,7 @@
             color: #f87171;
         }
 
-        /* ─── FOOTER ─── */
+        /* FOOTER */
         footer {
             background: rgba(0, 0, 0, 0.4);
             border-top: 1px solid var(--border);
@@ -434,7 +436,7 @@
             transform: translateY(-3px);
         }
 
-        /* ─── BACK TO TOP ─── */
+        /* BACK TO TOP */
         #backToTop {
             position: fixed;
             bottom: 32px;
@@ -476,11 +478,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navMenu">
                 <ul class="navbar-nav ms-auto gap-1">
-                    <li class="nav-item"><a class="nav-link" href="#skills">スキル</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#works">実績</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">依頼する</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills" data-i18n="nav-skills">スキル</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#works" data-i18n="nav-works">実績</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact" data-i18n="nav-contact">依頼する</a></li>
                 </ul>
-                <a href="#contact" class="btn btn-accent ms-3 btn-sm px-3 py-2">お問い合わせ</a>
+                <!-- Language Toggle -->
+                <div class="ms-3 d-flex gap-1">
+                    <button class="lang-btn active" id="btnJa" onclick="setLang('ja')">JP</button>
+                    <button class="lang-btn" id="btnEn" onclick="setLang('en')">EN</button>
+                </div>
+                <a href="#contact" class="btn btn-accent ms-3 btn-sm px-3 py-2" data-i18n="nav-cta">お問い合わせ</a>
             </div>
         </div>
     </nav>
@@ -490,16 +497,15 @@
         <canvas id="particleCanvas"></canvas>
         <div class="container content">
             <div class="badge-pill" data-aos="fade-down">🚀 AI × Web Development</div>
-            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100" data-i18n="hero-title">
                 アイデアを<br>高速でカタチに
             </h1>
-            <p class="hero-sub" data-aos="fade-up" data-aos-delay="200">
-                最新AIを活用し、コーポレートサイト・Webアプリ・自動化ツールを<br>
-                従来の数倍のスピードで高品質に開発します。
+            <p class="hero-sub" data-aos="fade-up" data-aos-delay="200" data-i18n="hero-sub">
+                最新AIを活用し、コーポレートサイト・Webアプリ・自動化ツールを<br>従来の数倍のスピードで高品質に開発します。
             </p>
             <div data-aos="fade-up" data-aos-delay="300">
-                <a href="#works" class="btn btn-accent me-3">実績を見る</a>
-                <a href="#contact" class="btn btn-outline-light">依頼・相談する</a>
+                <a href="#works" class="btn btn-accent me-3" data-i18n="hero-btn1">実績を見る</a>
+                <a href="#contact" class="btn btn-outline-light" data-i18n="hero-btn2">依頼・相談する</a>
             </div>
         </div>
     </section>
@@ -511,25 +517,25 @@
                 <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="0">
                     <div class="stat-card">
                         <div class="stat-number" data-target="100">0</div>
-                        <div class="stat-label">+ 制作実績</div>
+                        <div class="stat-label" data-i18n="stat1">+ 制作実績</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
                     <div class="stat-card">
                         <div class="stat-number" data-target="98">0</div>
-                        <div class="stat-label">% 顧客満足度</div>
+                        <div class="stat-label" data-i18n="stat2">% 顧客満足度</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
                     <div class="stat-card">
                         <div class="stat-number" data-target="5">0</div>
-                        <div class="stat-label">+ 年の経験</div>
+                        <div class="stat-label" data-i18n="stat3">+ 年の経験</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
                     <div class="stat-card">
                         <div class="stat-number" data-target="24">0</div>
-                        <div class="stat-label">h 最短納品</div>
+                        <div class="stat-label" data-i18n="stat4">h 最短納品</div>
                     </div>
                 </div>
             </div>
@@ -541,8 +547,8 @@
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
                 <span class="section-badge">Skills</span>
-                <h2 class="section-title gradient-text">使用技術</h2>
-                <p class="text-muted">モダンなスタックでフルスタック開発が可能です。</p>
+                <h2 class="section-title gradient-text" data-i18n="skills-title">使用技術</h2>
+                <p class="text-muted" data-i18n="skills-sub">モダンなスタックでフルスタック開発が可能です。</p>
             </div>
             <div class="text-center" data-aos="fade-up" data-aos-delay="100">
                 <div class="skill-chip"><i class="bi bi-filetype-html"></i> HTML5 / CSS3</div>
@@ -551,10 +557,11 @@
                 <div class="skill-chip"><i class="bi bi-filetype-py"></i> Python</div>
                 <div class="skill-chip"><i class="bi bi-git"></i> Git / GitHub</div>
                 <div class="skill-chip"><i class="bi bi-cloud-upload"></i> GitHub Pages</div>
-                <div class="skill-chip"><i class="bi bi-robot"></i> AI活用開発</div>
-                <div class="skill-chip"><i class="bi bi-file-earmark-excel"></i> データ分析</div>
-                <div class="skill-chip"><i class="bi bi-diagram-3"></i> API連携</div>
-                <div class="skill-chip"><i class="bi bi-phone"></i> レスポンシブ</div>
+                <div class="skill-chip"><i class="bi bi-robot"></i> <span data-i18n="skill-ai">AI活用開発</span></div>
+                <div class="skill-chip"><i class="bi bi-file-earmark-excel"></i> <span
+                        data-i18n="skill-data">データ分析</span></div>
+                <div class="skill-chip"><i class="bi bi-diagram-3"></i> <span data-i18n="skill-api">API連携</span></div>
+                <div class="skill-chip"><i class="bi bi-phone"></i> <span data-i18n="skill-resp">レスポンシブ</span></div>
             </div>
         </div>
     </section>
@@ -564,76 +571,66 @@
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
                 <span class="section-badge">Works</span>
-                <h2 class="section-title gradient-text">制作実績</h2>
-                <p class="text-muted">AIを活用して構築した代表的なプロジェクト。</p>
+                <h2 class="section-title gradient-text" data-i18n="works-title">制作実績</h2>
+                <p class="text-muted" data-i18n="works-sub">AIを活用して構築した代表的なプロジェクト。</p>
             </div>
-
             <div class="bento-grid">
-
-                <!-- 大カード：コーポレートサイト -->
+                <!-- Card 1 -->
                 <div class="bento-card bento-lg bento-1" data-aos="fade-right">
                     <i class="bi bi-building card-icon"></i>
                     <div class="card-content">
                         <div class="card-tag">Bootstrap 5 · GitHub Pages</div>
-                        <h3>コーポレートサイト</h3>
-                        <p>モダンUI・ダークモード・スクロールアニメーション・Bento Grid を実装した企業向け静的サイト。</p>
+                        <h3 data-i18n="work1-title">コーポレートサイト</h3>
+                        <p data-i18n="work1-desc">モダンUI・ダークモード・スクロールアニメーション・Bento Grid を実装した企業向け静的サイト。</p>
                         <div class="mt-2">
-                            <span class="tech-tag">Bootstrap</span>
-                            <span class="tech-tag">AOS</span>
-                            <span class="tech-tag">GitHub Pages</span>
+                            <span class="tech-tag">Bootstrap</span><span class="tech-tag">AOS</span><span
+                                class="tech-tag">GitHub Pages</span>
                         </div>
                         <a href="https://johnpascualkumar077.github.io/corporate-site/" target="_blank"
                             class="card-link">
-                            サイトを見る <i class="bi bi-arrow-up-right"></i>
+                            <span data-i18n="work-link">サイトを見る</span> <i class="bi bi-arrow-up-right"></i>
                         </a>
                     </div>
                 </div>
-
-                <!-- 小カード：Excel自動化 -->
+                <!-- Card 2 -->
                 <div class="bento-card bento-sm bento-2" data-aos="fade-left">
                     <i class="bi bi-file-earmark-excel card-icon"></i>
                     <div class="card-content">
                         <div class="card-tag">Python · Pandas</div>
-                        <h3>売上データ自動分析</h3>
-                        <p>Excelデータを読み込み、月別推移・季節性・予測をHTMLレポートとして出力。</p>
+                        <h3 data-i18n="work2-title">売上データ自動分析</h3>
+                        <p data-i18n="work2-desc">Excelデータを読み込み、月別推移・季節性・予測をHTMLレポートとして出力。</p>
                         <div class="mt-2">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Pandas</span>
-                            <span class="tech-tag">Matplotlib</span>
+                            <span class="tech-tag">Python</span><span class="tech-tag">Pandas</span><span
+                                class="tech-tag">Matplotlib</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- 中カード：Webアプリ -->
+                <!-- Card 3 -->
                 <div class="bento-card bento-md bento-3" data-aos="fade-right" data-aos-delay="100">
                     <i class="bi bi-app-indicator card-icon"></i>
                     <div class="card-content">
                         <div class="card-tag">JavaScript · API</div>
-                        <h3>Webアプリ開発</h3>
-                        <p>外部API連携でリアルタイムデータを表示する動的Webアプリを高速構築。</p>
+                        <h3 data-i18n="work3-title">Webアプリ開発</h3>
+                        <p data-i18n="work3-desc">外部API連携でリアルタイムデータを表示する動的Webアプリを高速構築。</p>
                         <div class="mt-2">
-                            <span class="tech-tag">Fetch API</span>
-                            <span class="tech-tag">JSON</span>
-                            <span class="tech-tag">Chart.js</span>
+                            <span class="tech-tag">Fetch API</span><span class="tech-tag">JSON</span><span
+                                class="tech-tag">Chart.js</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- 中カード：仕様書自動化 -->
+                <!-- Card 4 -->
                 <div class="bento-card bento-md bento-4" data-aos="fade-left" data-aos-delay="100">
                     <i class="bi bi-file-text card-icon"></i>
                     <div class="card-content">
                         <div class="card-tag">AI · Markdown</div>
-                        <h3>仕様書・ドキュメント自動化</h3>
-                        <p>AIを活用してシステム構成図・API仕様書・ユーザーフロー図を一括生成。</p>
+                        <h3 data-i18n="work4-title">仕様書・ドキュメント自動化</h3>
+                        <p data-i18n="work4-desc">AIを活用してシステム構成図・API仕様書・ユーザーフロー図を一括生成。</p>
                         <div class="mt-2">
-                            <span class="tech-tag">Markdown</span>
-                            <span class="tech-tag">Mermaid.js</span>
-                            <span class="tech-tag">AI</span>
+                            <span class="tech-tag">Markdown</span><span class="tech-tag">Mermaid.js</span><span
+                                class="tech-tag">AI</span>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -643,42 +640,44 @@
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
                 <span class="section-badge">Contact</span>
-                <h2 class="section-title gradient-text">依頼・ご相談</h2>
-                <p class="text-muted">お気軽にお問い合わせください。24時間以内にご返信します。</p>
+                <h2 class="section-title gradient-text" data-i18n="contact-title">依頼・ご相談</h2>
+                <p class="text-muted" data-i18n="contact-sub">お気軽にお問い合わせください。24時間以内にご返信します。</p>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
                     <div class="contact-card">
                         <form class="needs-validation" novalidate>
                             <div class="mb-4">
-                                <label class="form-label">お名前</label>
-                                <input type="text" class="form-control form-control-lg" placeholder="山田 太郎" required>
-                                <div class="invalid-feedback">お名前を入力してください。</div>
+                                <label class="form-label" data-i18n="form-name">お名前</label>
+                                <input type="text" class="form-control form-control-lg" id="formName"
+                                    placeholder="山田 太郎" required>
+                                <div class="invalid-feedback" data-i18n="form-name-err">お名前を入力してください。</div>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label">メールアドレス</label>
+                                <label class="form-label" data-i18n="form-email">メールアドレス</label>
                                 <input type="email" class="form-control form-control-lg"
                                     placeholder="example@example.com" required>
-                                <div class="invalid-feedback">正しいメールを入力してください。</div>
+                                <div class="invalid-feedback" data-i18n="form-email-err">正しいメールを入力してください。</div>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label">ご相談内容</label>
+                                <label class="form-label" data-i18n="form-type">ご相談内容</label>
                                 <select class="form-select form-select-lg">
-                                    <option value="">-- 選択してください --</option>
-                                    <option>コーポレートサイト制作</option>
-                                    <option>Webアプリ開発</option>
-                                    <option>データ分析・自動化</option>
-                                    <option>その他</option>
+                                    <option value="" data-i18n="form-type-ph">-- 選択してください --</option>
+                                    <option data-i18n="form-opt1">コーポレートサイト制作</option>
+                                    <option data-i18n="form-opt2">Webアプリ開発</option>
+                                    <option data-i18n="form-opt3">データ分析・自動化</option>
+                                    <option data-i18n="form-opt4">その他</option>
                                 </select>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label">詳細メッセージ</label>
-                                <textarea class="form-control" rows="5" placeholder="ご要望・ご予算・納期などをお聞かせください"
+                                <label class="form-label" data-i18n="form-msg">詳細メッセージ</label>
+                                <textarea class="form-control" rows="5" id="formMsg" placeholder="ご要望・ご予算・納期などをお聞かせください"
                                     required></textarea>
-                                <div class="invalid-feedback">メッセージを入力してください。</div>
+                                <div class="invalid-feedback" data-i18n="form-msg-err">メッセージを入力してください。</div>
                             </div>
-                            <button type="submit" class="btn btn-accent w-100 py-3 fs-5">送信する <i
-                                    class="bi bi-send ms-2"></i></button>
+                            <button type="submit" class="btn btn-accent w-100 py-3 fs-5">
+                                <span data-i18n="form-submit">送信する</span> <i class="bi bi-send ms-2"></i>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -700,121 +699,139 @@
     </footer>
 
     <!-- BACK TO TOP -->
-    <button id="backToTop" title="トップへ戻る"><i class="bi bi-chevron-up"></i></button>
+    <button id="backToTop" title="Top"><i class="bi bi-chevron-up"></i></button>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
     <script>
-        // ── AOS ──
-        AOS.init({ once: true, duration: 800, offset: 80 });
+            ─ TRANSLATION        
+    const i18n = {
+      ja: {
+        'nav-skills':         ', 'nav-works': '実績', 'na        ntact': '依頼する', 'nav-cta': 'お問い合わせ',
+        'hero-title':        デアを<br>高速でカタチに',
+        'hero-sub':         Iを活用し、コーポレートサイト・Webアプリ・自動化ツ        br>従来の数倍のスピードで高品質に開発            
+        'hero-btn1': '実績を見る', 'hero-b            '依頼・相談する',
+        'stat1': '+ 制作実績', 's        ':        顧客満足度', 'stat3': '+ 年の経験', 'stat4': 'h 最短納品               'ski        title': '使用技術', 'skills-sub': 'モダンなスタックでフルスタック開発が可能です。',
+        'skill        : 'AI活用開発', 'skil            ': 'データ分析', 'skill-api': 'API連携'            ll-resp':                 ,
+        'works-titl                績', 'works-sub': 'AIを                代表的なプロジェクト。',
+                       title': 'コーポレートサイト',
+                      -desc': 'モダンUI・ダークモード・スクロール                Bento Grid を実装した企業向け静的サイト。',
+                'work-link': 'サイトを見る',
+        'work2-title': '売上データ自動分析',
+                or            c': 'Excelデ                月別推移・季節性・予測をHTMLレポー                ,
+        'work3-ti                ebアプリ開発',
+        'work3-desc': '外部API連携でリアルタイムデータを表示する動的Webアプリを高速構築。',
+                          -title':                 メント自動化',
+                        esc': 'AIを活用してシステム構成図・API仕様書・ユーザーフロー図を一括生成。',
+                   ntact-title': '依頼・ご相談',
+        'contact-sub': 'お気軽にお                い。24時間以内にご返信            
+                    m-name': 'お名前', 'form-name-err': 'お名前を入力してください。',
+        'form        il': 'メールアドレス', 'form-e            rr': '正しいメールを入力してください。',
+        'form-type':                , 'form-type-ph': '-- 選択してください --',
+        'form                    ーポレートサイト制作', 'form-opt2': 'Webアプリ開発',
+                          t3': 'データ分析・自動化', 'form-opt4': 'その他',
+                          g': '詳細メッセージ', 'form-msg-err': 'メッセージを入力してく                         'form-submit'                              '_placehold                        田 太郎', '_placeholder-msg': 'ご要望・ご予算・納期などをお聞か                         },
+      en: {
+        'nav-skills': 'Skill                        ks': 'Works', 'nav-contact': 'Hire Me', 'nav-cta': 'Contact',
+                           itle': 'Turning Ideas                        lity at Speed'                    'h                :             ag        the        est AI to build corpo            ebsites, web apps, and auto             tools—at 10× speed without compromising quality.',               'hero-btn1            ew Works', 'hero-btn2': 'Hire /         ul                'sta         '+ Projects', 'stat2': '%         sfaction', 'stat3': '+ Years Exp.', 'stat4': 'h Fastest Deli        ',
+        'skills-title': 'Tech Stack', 'skills-sub': 'Full-sta            elopment with a modern, bat                ed stack.',
+        'skill-a                    iven Dev', 'skill-data':                     ysis', 'skill-api': 'API Integratio                    -resp': 'Responsi                       'works-title': 'Sele                    ', 'works-sub': 'Real projects built wi                    sted development.',
+        'work1                        rporate Website',
+        'work1-desc': 'Sta                         site with modern UI, dark mode, scrol                        , and Bento Grid layout.',
+        'work-link                    ite',
+                      k2-title': 'Sales Data Auto-Ana                              'wor        esc': 'Reads Excel data         outputs monthly trends, seasonality analysis, and fo        sts as an HTML report                'work3-title': 'Web Application',
+                k3-desc': 'Dynamic web app integrating ext            APIs to display real-time data, built at high speed.                    work4-title': 'Doc & Spec Automation',
+        'work4-desc': 'Generates system diagrams        I specs, and user-flow ch         in bulk using AI.',
+        'contact-title': 'Get In Touch',
+               contact-sub': 'Feel free to reach out.                 d within 24 hours.',
+                            ': 'Full Name', 'for                    ': 'Please enter your                
+                 form-email': 'Email Address', 'form-e            rr':        easenteid email.',
+        'form-type': 'Project Type', 'form-type-ph': '-- Please select --',
+        'form-opt1': 'Corporate Website', 'form-opt2': 'Web Application',
+        'form-opt3': 'Data Analysis / Automation', 'form-opt4': 'Other',
+        'form-msg': 'Message', 'form-msg-err': 'Please enter your message.',
+        'form-submit': 'Send Message',
+        '_placeholder-name': 'John Smith', '_placeholder-msg': 'Tell me about your project, budget, and timeline...'
+      }
+    };
 
-        // ── PARTICLE CANVAS ──
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-        let W, H, particles = [];
+    function setLang(lang) {
+      document.getElementById('htmlRoot').setAttribute('lang', lang);
+      document.getElementById('btnJa').classList.toggle('active', lang === 'ja');
+      document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+      const t = i18n[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      // update placeholders
+      const nameEl = document.getElementById('formName');
+      const msgEl  = document.getElementById('formMsg');
+      if (nameEl) nameEl.placeholder = t['_placeholder-name'];
+      if (msgEl)  msgEl.placeholder  = t['_placeholder-msg'];
+      localStorage.setItem('lang', lang);
+    }
 
-        function resize() {
-            W = canvas.width = window.innerWidth;
-            H = canvas.height = window.innerHeight;
+    // Restore saved language
+    const saved = localStorage.getItem('lang') || 'ja';
+    setLang(saved);
+
+    // ── AOS ──
+    AOS.init({ once: true, duration: 800, offset: 80 });
+
+    // ── PARTICLE CANVAS ──
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
+    function rand(a, b) { return Math.random() * (b - a) + a; }
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = rand(0, W); this.y = rand(0, H); this.r = rand(1, 3);
+        this.vx = rand(-0.4, 0.4); this.vy = rand(-0.4, 0.4);
+        this.alpha = rand(0.2, 0.7);
+        this.color = Math.random() > 0.5 ? '124,58,237' : '6,182,212';
+      }
+      update() { this.x += this.vx; this.y += this.vy; if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset(); }
+      draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2); ctx.fillStyle = `rgba(${this.color},${this.alpha})`; ctx.fill(); }
+    }
+    for (let i = 0; i < 120; i++) particles.push(new Particle());
+    function drawLines() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+          const d = Math.sqrt(dx*dx+dy*dy);
+          if (d < 130) { ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.strokeStyle = `rgba(124,58,237,${0.12*(1-d/130)})`; ctx.lineWidth = 0.8; ctx.stroke(); }
         }
-        window.addEventListener('resize', resize);
-        resize();
+      }
+    }
+    function animate() { ctx.clearRect(0, 0, W, H); particles.forEach(p => { p.update(); p.draw(); }); drawLines(); requestAnimationFrame(animate); }
+    animate();
 
-        function rand(min, max) { return Math.random() * (max - min) + min; }
-
-        class Particle {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = rand(0, W);
-                this.y = rand(0, H);
-                this.r = rand(1, 3);
-                this.vx = rand(-0.4, 0.4);
-                this.vy = rand(-0.4, 0.4);
-                this.alpha = rand(0.2, 0.7);
-                this.color = Math.random() > 0.5 ? '124,58,237' : '6,182,212';
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${this.color},${this.alpha})`;
-                ctx.fill();
-            }
+    // ── COUNTER ──
+    const counterObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target, target = +el.dataset.target;
+          let cur = 0; const step = target / (1800 / 16);
+          const t = setInterval(() => { cur = Math.min(cur + step, target); el.textContent = Math.floor(cur); if (cur >= target) clearInterval(t); }, 16);
+          counterObs.unobserve(el);
         }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.stat-number').forEach(c => counterObs.observe(c));
 
-        for (let i = 0; i < 120; i++) particles.push(new Particle());
+    // ── BACK TO TOP ──
+    const btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => btn.classList.toggle('show', window.scrollY > 300));
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-        function drawLines() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 130) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(124,58,237,${0.12 * (1 - dist / 130)})`;
-                        ctx.lineWidth = 0.8;
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, W, H);
-            particles.forEach(p => { p.update(); p.draw(); });
-            drawLines();
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        // ── COUNTER ANIMATION ──
-        const counters = document.querySelectorAll('.stat-number');
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    const target = +el.dataset.target;
-                    let current = 0;
-                    const duration = 1800;
-                    const step = target / (duration / 16);
-                    const timer = setInterval(() => {
-                        current = Math.min(current + step, target);
-                        el.textContent = Math.floor(current);
-                        if (current >= target) clearInterval(timer);
-                    }, 16);
-                    counterObserver.unobserve(el);
-                }
-            });
-        }, { threshold: 0.5 });
-        counters.forEach(c => counterObserver.observe(c));
-
-        // ── BACK TO TOP ──
-        const btn = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            btn.classList.toggle('show', window.scrollY > 300);
-        });
-        btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-        // ── FORM VALIDATION ──
-        document.querySelectorAll('.needs-validation').forEach(form => {
-            form.addEventListener('submit', e => {
-                if (!form.checkValidity()) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            });
-        });
+    // ── FORM VALIDATION ──
+    document.querySelectorAll('.needs-validation').forEach(form => {
+      form.addEventListener('submit', e => { if (!form.checkValidity()) { e.preventDefault(); e.stopPropagation(); } form.classList.add('was-validated'); });
+    });
     </script>
 </body>
 
