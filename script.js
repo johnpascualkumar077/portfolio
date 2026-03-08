@@ -31,7 +31,11 @@ const i18n = {
         'ai-msg-1': '「高品質なコーポレートサイトを3日で作りたい」',
         'ai-msg-2': '「データの自動集計ツールをPythonで作りたい」',
         'ai-msg-3': '「モダンな管理画面のUIをデザインしてほしい」',
-        'ai-btn': '開発を依頼する'
+        'ai-btn': '開発を依頼する',
+        'cta-buy': '今すぐ開発を依頼する (Stripe決済)',
+        'premium-title': 'プレミアム開発パッケージ',
+        'premium-desc': 'AIを活用した爆速・高品質なフルセット開発。',
+        'premium-price': '¥50,000 〜'
     },
     en: {
         'nav-skills': 'Skills', 'nav-works': 'Works', 'nav-contact': 'Hire Me', 'nav-cta': 'Contact',
@@ -65,7 +69,11 @@ const i18n = {
         'ai-msg-1': '"Build a high-quality corporate site in 3 days."',
         'ai-msg-2': '"Create a data aggregation tool with Python."',
         'ai-msg-3': '"Design a modern UI for an admin dashboard."',
-        'ai-btn': 'Order Development'
+        'ai-btn': 'Order Development',
+        'cta-buy': 'Buy Development Package (Stripe)',
+        'premium-title': 'Premium Dev Package',
+        'premium-desc': 'High-speed, AI-driven full-set development.',
+        'premium-price': '$350 〜'
     }
 };
 

@@ -178,23 +178,39 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
+                    <!-- Stripe Buy Section -->
+                    <div class="text-center mb-5 p-4 border rounded-4 bg-white shadow-sm">
+                        <h3 data-i18n="premium-title" class="fw-bold mb-2">プレミアム開発パッケージ</h3>
+                        <p data-i18n="premium-desc" class="text-muted mb-3">AIを活用した爆速・高品質なフルセット開発。</p>
+                        <div data-i18n="premium-price" class="fs-2 fw-900 text-primary mb-4">¥50,000 〜</div>
+                        <a href="https://buy.stripe.com/4gMcN7cwc8g4cN36Dk0VO01" target="_blank"
+                            class="btn-primary-custom w-100 py-3 fs-5" data-i18n="cta-buy">
+                            今すぐ開発を依頼する (Stripe決済)
+                        </a>
+                    </div>
+
                     <div class="contact-card">
-                        <form class="needs-validation" novalidate>
+                        <form action="https://api.web3forms.com/submit" method="POST" class="needs-validation"
+                            novalidate>
+                            <input type="hidden" name="access_key" value="527bce25-0b81-49e0-8a0f-f20adb4e722a">
+                            <input type="hidden" name="subject" value="Portfolio Contact from Web">
+                            <input type="hidden" name="from_name" value="Portfolio AI Agent">
+
                             <div class="mb-4">
                                 <label class="form-label" data-i18n="form-name">お名前</label>
-                                <input type="text" class="form-control form-control-lg" id="formName"
+                                <input type="text" name="name" class="form-control form-control-lg" id="formName"
                                     placeholder="山田 太郎" required>
                                 <div class="invalid-feedback" data-i18n="form-name-err">お名前を入力してください。</div>
                             </div>
                             <div class="mb-4">
                                 <label class="form-label" data-i18n="form-email">メールアドレス</label>
-                                <input type="email" class="form-control form-control-lg"
+                                <input type="email" name="email" class="form-control form-control-lg"
                                     placeholder="example@example.com" required>
                                 <div class="invalid-feedback" data-i18n="form-email-err">正しいメールを入力してください。</div>
                             </div>
                             <div class="mb-4">
                                 <label class="form-label" data-i18n="form-type">ご相談内容</label>
-                                <select class="form-select form-select-lg">
+                                <select name="project_type" class="form-select form-select-lg">
                                     <option value="" data-i18n="form-type-ph">-- 選択してください --</option>
                                     <option data-i18n="form-opt1">コーポレートサイト制作</option>
                                     <option data-i18n="form-opt2">Webアプリ開発</option>
@@ -204,10 +220,13 @@
                             </div>
                             <div class="mb-4">
                                 <label class="form-label" data-i18n="form-msg">詳細メッセージ</label>
-                                <textarea class="form-control" rows="5" id="formMsg" placeholder="ご要望・ご予算・納期などをお聞かせください"
-                                    required></textarea>
+                                <textarea name="message" class="form-control" rows="5" id="formMsg"
+                                    placeholder="ご要望・ご予算・納期などをお聞かせください" required></textarea>
                                 <div class="invalid-feedback" data-i18n="form-msg-err">メッセージを入力してください。</div>
                             </div>
+                            <!-- Success Redirection (Optional) -->
+                            <input type="hidden" name="redirect" value="https://web3forms.com/success">
+
                             <button type="submit" class="btn-primary-custom w-100 py-3 fs-5 d-block text-center">
                                 <span data-i18n="form-submit">送信する</span> <i class="bi bi-send ms-2"></i>
                             </button>
