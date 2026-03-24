@@ -225,6 +225,27 @@ section { padding: 100px 0; }
 }
 #aiToggle:hover { transform: scale(1.1); background: var(--accent); color: #fff; }
 
+/* ── RESPONSIVE ── */
+@media (max-width: 992px) {
+    .bento-grid { grid-auto-rows: auto; }
+    .bento-lg { grid-column: span 12; min-height: 220px; }
+    .bento-sm { grid-column: span 12; min-height: 200px; }
+    .bento-md { grid-column: span 6; min-height: 200px; }
+}
+
+@media (max-width: 768px) {
+    section { padding: 64px 0; }
+    .bento-md { grid-column: span 12; }
+    .contact-card { padding: 32px 20px; }
+    .modal-body .row { flex-direction: column; }
+    .modal-body .row > div { width: 100%; max-width: 100%; }
+}
+
 @media (max-width: 576px) {
     #aiWidget { width: calc(100vw - 64px); }
+    #backToTop { bottom: 20px; right: 20px; }
+    #aiToggle { bottom: 20px; left: 20px; }
+    .hero-sub { font-size: 1rem; }
+    .bento-card { padding: 20px; }
+    section { padding: 48px 0; }
 }

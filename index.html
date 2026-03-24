@@ -6,6 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - AI-Powered Developer</title>
     <meta name="description" content="AI活用でモダンなWebアプリ・コーポレートサイト・自動化ツールを爆速開発するポートフォリオ。">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Portfolio - AI-Powered Developer">
+    <meta property="og:description" content="AI活用でモダンなWebアプリ・コーポレートサイト・自動化ツールを爆速開発するポートフォリオ。">
+    <meta property="og:url" content="https://johnpascualkumar077.github.io/portfolio/">
+    <meta property="og:site_name" content="AI-Powered Developer Portfolio">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Portfolio - AI-Powered Developer">
+    <meta name="twitter:description" content="AI活用でモダンなWebアプリ・コーポレートサイト・自動化ツールを爆速開発するポートフォリオ。">
+    <!-- Canonical -->
+    <link rel="canonical" href="https://johnpascualkumar077.github.io/portfolio/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Noto+Sans+JP:wght@400;700&display=swap"
@@ -22,7 +34,7 @@
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="#">&lt;dev/&gt;</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="メニューを開く">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navMenu">
@@ -124,8 +136,8 @@
                 <p style="color:var(--text-muted)" data-i18n="works-sub">AIを活用して構築した代表的なプロジェクト。</p>
             </div>
             <div class="bento-grid">
-                <div class="bento-card bento-lg bento-1" data-aos="fade-right" onclick="openWorkModal(1)">
-                    <i class="bi bi-building card-icon"></i>
+                <div class="bento-card bento-lg bento-1" data-aos="fade-right" onclick="openWorkModal(1)" role="button" tabindex="0" aria-label="コーポレートサイトの詳細を見る" onkeydown="if(event.key==='Enter'||event.key===' ')openWorkModal(1)">
+                    <i class="bi bi-building card-icon" aria-hidden="true"></i>
                     <div class="card-content">
                         <div class="card-tag">Bootstrap 5 · GitHub Pages</div>
                         <h3 data-i18n="work1-title">コーポレートサイト</h3>
@@ -134,8 +146,8 @@
                                 class="tech-tag">GitHub Pages</span></div>
                     </div>
                 </div>
-                <div class="bento-card bento-sm bento-2" data-aos="fade-left" onclick="openWorkModal(2)">
-                    <i class="bi bi-file-earmark-excel card-icon"></i>
+                <div class="bento-card bento-sm bento-2" data-aos="fade-left" onclick="openWorkModal(2)" role="button" tabindex="0" aria-label="売上データ自動分析の詳細を見る" onkeydown="if(event.key==='Enter'||event.key===' ')openWorkModal(2)">
+                    <i class="bi bi-file-earmark-excel card-icon" aria-hidden="true"></i>
                     <div class="card-content">
                         <div class="card-tag">Python · Pandas</div>
                         <h3 data-i18n="work2-title">売上データ自動分析</h3>
@@ -144,8 +156,8 @@
                     </div>
                 </div>
                 <div class="bento-card bento-md bento-3" data-aos="fade-right" data-aos-delay="100"
-                    onclick="openWorkModal(3)">
-                    <i class="bi bi-app-indicator card-icon"></i>
+                    onclick="openWorkModal(3)" role="button" tabindex="0" aria-label="Webアプリ開発の詳細を見る" onkeydown="if(event.key==='Enter'||event.key===' ')openWorkModal(3)">
+                    <i class="bi bi-app-indicator card-icon" aria-hidden="true"></i>
                     <div class="card-content">
                         <div class="card-tag">JavaScript · API</div>
                         <h3 data-i18n="work3-title">Webアプリ開発</h3>
@@ -155,8 +167,8 @@
                     </div>
                 </div>
                 <div class="bento-card bento-md bento-4" data-aos="fade-left" data-aos-delay="100"
-                    onclick="openWorkModal(4)">
-                    <i class="bi bi-file-text card-icon"></i>
+                    onclick="openWorkModal(4)" role="button" tabindex="0" aria-label="仕様書・ドキュメント自動化の詳細を見る" onkeydown="if(event.key==='Enter'||event.key===' ')openWorkModal(4)">
+                    <i class="bi bi-file-text card-icon" aria-hidden="true"></i>
                     <div class="card-content">
                         <div class="card-tag">AI · Markdown</div>
                         <h3 data-i18n="work4-title">仕様書・ドキュメント自動化</h3>
@@ -224,12 +236,10 @@
                                     placeholder="ご要望・ご予算・納期などをお聞かせください" required></textarea>
                                 <div class="invalid-feedback" data-i18n="form-msg-err">メッセージを入力してください。</div>
                             </div>
-                            <!-- Success Redirection (Optional) -->
-                            <input type="hidden" name="redirect" value="https://web3forms.com/success">
-
-                            <button type="submit" class="btn-primary-custom w-100 py-3 fs-5 d-block text-center">
-                                <span data-i18n="form-submit">送信する</span> <i class="bi bi-send ms-2"></i>
+                            <button type="submit" id="formSubmitBtn" class="btn-primary-custom w-100 py-3 fs-5 d-block text-center">
+                                <span data-i18n="form-submit">送信する</span> <i class="bi bi-send ms-2" aria-hidden="true"></i>
                             </button>
+                            <div id="formResult" class="mt-3" role="alert" aria-live="polite"></div>
                         </form>
                     </div>
                 </div>
@@ -290,15 +300,15 @@
                 data-i18n="ai-btn">Contact AI</a>
         </div>
     </div>
-    <div id="aiToggle"><i class="bi bi-chat-heart"></i></div>
+    <div id="aiToggle" role="button" tabindex="0" aria-label="AIアシスタントを開く" aria-expanded="false"><i class="bi bi-chat-heart" aria-hidden="true"></i></div>
 
     <!-- UI COMPONENTS -->
-    <button id="backToTop" title="Top"><i class="bi bi-chevron-up"></i></button>
+    <button id="backToTop" title="Top" aria-label="ページトップへ戻る"><i class="bi bi-chevron-up" aria-hidden="true"></i></button>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
     <!-- External JS -->
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 
 </html>

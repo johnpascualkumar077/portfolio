@@ -19,6 +19,7 @@ const i18n = {
         'form-type': 'ご相談内容', 'form-type-ph': '-- 選択してください --',
         'form-opt1': 'コーポレートサイト制作', 'form-opt2': 'Webアプリ開発', 'form-opt3': 'データ分析・自動化', 'form-opt4': 'その他',
         'form-msg': '詳細メッセージ', 'form-msg-err': 'メッセージを入力してください。', 'form-submit': '送信する',
+        'form-sending': '送信中...', 'form-success': 'ありがとうございます！24時間以内にご返信します。', 'form-error': '送信に失敗しました。もう一度お試しください。',
         '_ph-name': '山田 太郎', '_ph-msg': 'ご要望・ご予算・納期などをお聞かせください',
         // Modal & Details
         'det-problem': '解決した課題', 'det-tech': '使用技術', 'det-period': '制作期間', 'det-close': '閉じる',
@@ -57,6 +58,7 @@ const i18n = {
         'form-type': 'Project Type', 'form-type-ph': '-- Please select --',
         'form-opt1': 'Corporate Website', 'form-opt2': 'Web Application', 'form-opt3': 'Data Analysis / Automation', 'form-opt4': 'Other',
         'form-msg': 'Message', 'form-msg-err': 'Please enter your message.', 'form-submit': 'Send Message',
+        'form-sending': 'Sending...', 'form-success': 'Thank you! I will reply within 24 hours.', 'form-error': 'Failed to send. Please try again.',
         '_ph-name': 'John Smith', '_ph-msg': 'Tell me about your project, budget, and timeline...',
         // Modal & Details
         'det-problem': 'Problem Solved', 'det-tech': 'Tech Stack', 'det-period': 'Duration', 'det-close': 'Close',
@@ -124,16 +126,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Form
     document.querySelectorAll('.needs-validation').forEach(f => {
-        f.addEventListener('submit', e => { if (!f.checkValidity()) { e.preventDefault(); e.stopPropagation(); } f.classList.add('was-validated'); });
+        f.addEventListener('submit', async e => {
+            e.preventDefault();
+            if (!f.checkValidity()) { f.classList.add('was-validated'); return; }
+            f.classList.add('was-validated');
+
+            const lang = document.getElementById('htmlRoot').lang;
+            const t = i18n[lang];
+            const btn = document.getElementById('formSubmitBtn');
+            const result = document.getElementById('formResult');
+            const origHTML = btn.innerHTML;
+
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>${t['form-sending']}`;
+            result.innerHTML = '';
+
+            const formData = new FormData(f);
+            try {
+                const res = await fetch(f.action, { method: 'POST', body: formData });
+                const json = await res.json();
+                if (json.success) {
+                    result.innerHTML = `<div class="alert alert-success d-flex align-items-center gap-2"><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>${t['form-success']}</span></div>`;
+                    f.reset();
+                    f.classList.remove('was-validated');
+                    btn.disabled = false;
+                    btn.innerHTML = origHTML;
+                } else {
+                    throw new Error('failed');
+                }
+            } catch {
+                result.innerHTML = `<div class="alert alert-danger d-flex align-items-center gap-2"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i><span>${t['form-error']}</span></div>`;
+                btn.disabled = false;
+                btn.innerHTML = origHTML;
+            }
+        });
     });
 
     // AI widget show/hide
     const aiToggle = document.getElementById('aiToggle');
     const aiWidget = document.getElementById('aiWidget');
-    aiToggle.addEventListener('click', () => {
-        aiWidget.classList.toggle('show');
-        if (aiWidget.classList.contains('show')) startAiTyping();
-    });
+    function toggleAiWidget() {
+        const isOpen = aiWidget.classList.toggle('show');
+        aiToggle.setAttribute('aria-expanded', isOpen);
+        aiToggle.setAttribute('aria-label', isOpen ? 'AIアシスタントを閉じる' : 'AIアシスタントを開く');
+        if (isOpen) startAiTyping();
+    }
+    aiToggle.addEventListener('click', toggleAiWidget);
+    aiToggle.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleAiWidget(); } });
 });
 
 // ── WORK MODAL LOGIC ──
